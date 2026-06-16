@@ -84,12 +84,17 @@ const Results = () => {
     };
 
 
-  const chartData = wpmHistory;
+    const chartData = wpmHistory;
 
     const saveScore = async () => {
         if (!user) return;
 
         try {
+
+
+            const finalWpm = Math.round(
+                wpm * (accuracy / 100)
+            );
 
             // Normal Score History Save
 
@@ -97,7 +102,8 @@ const Results = () => {
                 uid: user.uid,
                 name: user.displayName,
                 photo: user.photoURL,
-                wpm,
+                wpm: finalWpm,
+                rawWpm: wpm,
                 accuracy,
                 errors,
                 chars,
@@ -117,7 +123,8 @@ const Results = () => {
                     uid: user.uid,
                     name: user.displayName,
                     photo: user.photoURL,
-                    wpm,
+                    wpm: finalWpm,
+                    rawWpm: wpm,
                     accuracy,
                     errors,
                     chars,
@@ -129,13 +136,14 @@ const Results = () => {
 
                 const oldData = bestSnap.data();
 
-                if (wpm > oldData.wpm) {
+                if (finalWpm > oldData.wpm) {
 
                     await setDoc(bestRef, {
                         uid: user.uid,
                         name: user.displayName,
                         photo: user.photoURL,
-                        wpm,
+                        wpm: finalWpm,
+                        rawWpm: wpm,
                         accuracy,
                         errors,
                         chars,
@@ -160,7 +168,7 @@ const Results = () => {
 
     return (
         <div
-                  className="
+            className="
                   min-h-screen
                   bg-black
                   text-white
@@ -171,7 +179,7 @@ const Results = () => {
                   md:px-6
                   py-6
                   "
-              >
+        >
             <div className="max-w-3xl w-full">
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center mb-10">
