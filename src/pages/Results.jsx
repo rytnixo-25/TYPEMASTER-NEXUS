@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { addDoc, collection, doc, getDoc, setDoc, } from "firebase/firestore";
+import {doc,getDoc,setDoc,} from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import { useAuth } from "../context/AuthContext";
 import { motion } from "framer-motion";
@@ -98,18 +98,7 @@ const Results = () => {
 
             // Normal Score History Save
 
-            await addDoc(collection(db, "scores"), {
-                uid: user.uid,
-                name: user.displayName,
-                photo: user.photoURL,
-                wpm: finalWpm,
-                rawWpm: wpm,
-                accuracy,
-                errors,
-                chars,
-                rating,
-                createdAt: new Date(),
-            });
+
 
             // Best Score System
 
